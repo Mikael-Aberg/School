@@ -1,0 +1,45 @@
+﻿@model School.Models.StudentModel
+
+@{
+    ViewBag.Title = "StudentDetails";
+}
+
+<h2>StudentDetails</h2>
+
+<div>
+    <h4>StudentModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+    </dl>
+</div>
+
+<h3>Courses</h3>
+
+<table class="table">
+    @foreach (var item in Model.Courses)
+    {
+        <tr>
+            <td>@Html.DisplayFor(x => item.Subject.SubjectName)</td>
+            <td>@Html.DisplayFor(x => Model.Grades.First(y => y.Course.Id == item.Id).Grade)</td>
+        </tr>
+    }
+</table>
+
+<p>
+    @Html.ActionLink("Back to List", "Schedule")
+</p>

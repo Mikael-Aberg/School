@@ -1,0 +1,62 @@
+﻿@model PagedList.IPagedList<School.Models.LessonModel>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Schedule";
+}
+
+<h2>Schedule</h2>
+
+<table class="table">
+    <tr>
+        @foreach (var item in Model.Take(1))
+        {
+            <th>
+                @Html.DisplayNameFor(model => item.Course)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => item.Day)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => item.Course.Subject.Teacher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => item.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => item.EndTime)
+            </th>
+            <th></th>
+        }
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(x => item.Course.Subject.SubjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(x => item.Day.Day)
+            </td>
+            <td>
+                @Html.DisplayFor(x => item.Course.Subject.Teacher.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(x => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(x => item.EndTime)
+            </td>
+            <td>
+                @Html.ActionLink("Teacher details", "TeacherDetails", new { id = item.Course.Subject.Teacher.Id }) |
+                @Html.ActionLink("Students", "StudentsInCourse", new { id = item.Course.Id })
+            </td>
+        </tr>
+    }
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Schedule",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

@@ -1,0 +1,21 @@
+﻿@model School.Models.TeacherModel
+
+@{
+    ViewBag.Title = "TeacherDetails";
+}
+
+<h2>@Model.FullName</h2>
+<hr />
+<h4>Subjects</h4>
+<table class="table">
+    @foreach (var item in Model.Subjects)
+    {
+        <tr>
+            <td>@Html.DisplayFor(x => item.SubjectName)</td>
+        </tr>
+    }
+</table>
+
+<p>
+    @Html.ActionLink("Back to List", "Schedule")
+</p>
